@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/chris/Arduino/libraries/**",
+                "/home/chris/arduino-1.8.12/libraries/**",
+                "/home/chris/.arduino15/packages/attiny/hardware/avr/1.0.2/**",
+                "${workspaceFolder}/**",
+            ],
+            "defines": [
+                "USBCON"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "gcc-x64",
+            "forcedInclude": []
+        }
+    ],
+    "version": 4
+}
