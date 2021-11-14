@@ -10,9 +10,19 @@ void setup()
     pinMode(PIN_2, OUTPUT);
     pinMode(PIN_3, OUTPUT);
     pinMode(PIN_4, OUTPUT);
-    pinMode(PIN_5, OUTPUT);
+    pinMode(PIN_5, INPUT_PULLUP);
 
     while (1) {
+
+        if (!digitalRead(PIN_5))
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                turnOffLeds();
+                turnOnLed(i);
+                delay(300);
+            }
+        }
 
     // 0b0010 - 1
     // 0b1101 - 2
