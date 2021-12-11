@@ -1,3 +1,5 @@
+#include <avr/io.h>
+
 #define PIN_1 0 // row 1
 #define PIN_2 1 // row 2
 #define PIN_3 2 // row 3
@@ -13,16 +15,35 @@ void setup()
     pinMode(PIN_5, INPUT_PULLUP);
 
     while (1) {
-
+        
         if (!digitalRead(PIN_5))
         {
             for (int i = 0; i < 6; i++)
             {
                 turnOffLeds();
                 turnOnLed(i);
-                delay(300);
+                delay(50);
             }
+            turnOffLeds();
+            delay(5);
+            // for (int i = 1; i < 6; i++)
+            // {
+            //     turnOffLeds();
+            //     turnOnLed(5 - i);
+            //     delay(300);
+            // }
         }
+        else
+        {
+            turnOnLed(random(6));
+            delay(5);
+            turnOnLed(random(6));
+            delay(5);
+            turnOffLeds();
+            delay(300 + random(300));
+
+        }
+        
 
     // 0b0010 - 1
     // 0b1101 - 2
@@ -30,12 +51,6 @@ void setup()
     // 0b1011 - 4
     // 0b1000
     // 0b0111
-
-    turnOnLed(random(6));
-    delay(5);
-    turnOffLeds();
-    delay(100 + random(50));
-
     // for (int i = 0; i < 6; i++)
     // {
     //     turnOnLed(i);
@@ -110,12 +125,12 @@ void turnOnLed(int idx)
     // 1   1   1   0    7
 
     int lut[] = {
+        0b1101,
         0b0010,
-    0b1101,
-    0b0100,
-    0b1011,
-    0b1000,
-    0b0111,
+        0b1011,
+        0b0100,
+        0b0111,
+        0b1000,
         // 0b1000,
         // 0b0100,
         // 0b0010,
@@ -126,12 +141,16 @@ void turnOnLed(int idx)
         // 0b1110,
     };
 
-    auto v = lut[idx];
+    auto v = lut[idx] & 0b1111;
 
-    digitalWrite(PIN_1, (v & 0b1) > 0);
-    digitalWrite(PIN_2, (v & 0b10) > 0);
-    digitalWrite(PIN_3, (v & 0b100) > 0);
-    digitalWrite(PIN_4, (v & 0b1000) > 0);
+    auto existing = PORTB & 0b10000;
+
+    PORTB = existing | v;
+
+    // digitalWrite(PIN_1, (v & 0b1) > 0);
+    // digitalWrite(PIN_2, (v & 0b10) > 0);
+    // digitalWrite(PIN_3, (v & 0b100) > 0);
+    // digitalWrite(PIN_4, (v & 0b1000) > 0);
 
     // auto high = HIGH;
     // auto low = LOW;
@@ -151,8 +170,10 @@ void turnOnLed(int idx)
 
 void turnOffLeds()
 {
-    digitalWrite(PIN_1, LOW);
-    digitalWrite(PIN_2, LOW);
-    digitalWrite(PIN_3, LOW);
-    digitalWrite(PIN_4, LOW);
+    // digitalWrite(PIN_1, LOW);
+    // digitalWrite(PIN_2, LOW);
+    // digitalWrite(PIN_3, LOW);
+    // digitalWrite(PIN_4, LOW);
+
+    PORTB &= 0b10000;
 }
