@@ -99,6 +99,7 @@ void loop()
         case 2:
             randomBlink();
             return;
+        // TODO: add more patterns
         case 3:
         case 4:
         case 5:
