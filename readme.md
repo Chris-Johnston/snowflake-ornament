@@ -38,7 +38,7 @@ I use [damellis/attiny] for ATTiny85 support in the Arduino editor (via the VSCo
 | SW1 | 6x6mm SMD Pushbutton |
 | BT1 | CR2023 Battery Holder |
 
-![Schematic screenshot](images/schematic.png)
+![Schematic screenshot](images/schematic-screenshot.png)
 
 Yes, the traces aren't parallel to the edges of the board, and yes it bugs me too.
 
