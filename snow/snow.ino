@@ -9,7 +9,7 @@
 #define PIN_BUTTON 4 // col 2
 
 #define DEBOUNCE_TIME 80
-#define NUM_PATTERNS 8
+#define NUM_PATTERNS 9
 
 // track idle time
 volatile unsigned long wake_time = 0;
@@ -91,22 +91,28 @@ void loop()
     {
         case 1:
             pwm();
-            // turnOnLed(0);
-            // delay(5);
-            // turnOffLeds();
-            //delay(250);
             return;
         case 2:
             randomBlink();
             return;
-        // TODO: add more patterns
         case 3:
+            counter();
+            return;
         case 4:
+            spin();
+            return;
+        // TODO: add more patterns
         case 5:
+            spinReverse();
+            return;
         case 6:
+            allOn();
+            return;
         case 7:
+            allOnDim();
+            return;
         case 8:
-            turnOnLed(pattern - 2);
+            piDigits();
             return;
         case 0:
         default:
@@ -116,6 +122,84 @@ void loop()
             // unset flag on wake
             pattern = 1;
             return;
+    }
+}
+
+// first 200 digits of pi
+uint8_t digits[] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 2, 7, 9, 5, 0, 2, 8, 8, 4, 1, 9, 7, 1, 6, 9, 3, 9, 9, 3, 7, 5, 1, 0, 5, 8, 2, 0, 9, 7, 4, 9, 4, 4, 5, 9, 2, 3, 0, 7, 8, 1, 6, 4, 0, 6, 2, 8, 6, 2, 0, 8, 9, 9, 8, 6, 2, 8, 0, 3, 4, 8, 2, 5, 3, 4, 2, 1, 1, 7, 0, 6, 7, 9, 8, 2, 1, 4, 8, 0, 8, 6, 5, 1, 3, 2, 8, 2, 3, 0, 6, 6, 4, 7, 0, 9, 3, 8, 4, 4, 6, 0, 9, 5, 5, 0, 5, 8, 2, 2, 3, 1, 7, 2, 5, 3, 5, 9, 4, 0, 8, 1, 2, 8, 4, 8, 1, 1, 1, 7, 4, 5, 0, 2, 8, 4, 1, 0, 2, 7, 0, 1, 9, 3, 8, 5, 2, 1, 1, 0, 5, 5, 5, 9, 6, 4, 4, 6, 2, 2, 9, 4, 8, 9, 5, 4, 9, 3, 0, 3, 8, 1, 9};
+
+void piDigits()
+{
+    auto idx = ((millis() - button_debounce) / 250) % 200;
+    auto digit = digits[idx];
+    
+    for (auto bit = 0; bit < 6; bit++)
+    {
+        if (digit & (1 << bit))
+        {
+            turnOnLed(bit);
+            delayMicroseconds(50);
+        }
+        turnOffLeds();
+        delayMicroseconds(5);
+    }
+}
+
+void allOn()
+{
+    for (auto i = 0; i < 6; i++)
+    {
+        turnOnLed(i);
+        delayMicroseconds(5);
+    }
+}
+
+void allOnDim()
+{
+    for (auto i = 0; i < 6; i++)
+    {
+        turnOnLed(i);
+        delayMicroseconds(50);
+        turnOffLeds();
+        delayMicroseconds(3);
+    }
+}
+
+void spin()
+{
+    auto time = (millis() / 250) % 6;
+
+    turnOnLed(time);
+    delayMicroseconds(50);
+    turnOffLeds();
+    delayMicroseconds(3);
+}
+
+void spinReverse()
+{
+    auto time = (millis() / 250) % 6;
+
+    turnOnLed(5 - time);
+    delayMicroseconds(50);
+    turnOffLeds();
+    delayMicroseconds(3);
+}
+
+void counter()
+{
+    // counts in binary
+    // 6 bits, so 2^5
+    auto time = (millis() / 1000) % 64;
+    
+    for (auto bit = 0; bit < 6; bit++)
+    {
+        if (time & (1 << bit))
+        {
+            turnOnLed(bit);
+            delayMicroseconds(50);
+        }
+        turnOffLeds();
+        delayMicroseconds(5);
     }
 }
 

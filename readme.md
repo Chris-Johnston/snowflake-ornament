@@ -27,3 +27,21 @@ center to make room for the button, ATTiny85, and battery.
 I use [damellis/attiny] for ATTiny85 support in the Arduino editor (via the VSCode extension).
 
 [damellis/attiny]: https://github.com/damellis/attiny
+
+## Bill of Materials
+
+| Reference | Item |
+| --------- | ---- |
+| U1 | Attiny85V |
+| R1, R2, R3, R4 | 50 ohm 1206 resistor |
+| R5 | 10k 1206 resistor |
+| C1 | 1 uf 1206 capacitor |
+| D1 - D6 | 0603 LED |
+| SW1 | 6x6mm SMD Pushbutton |
+| BT1 | CR2023 Battery Holder |
+
+![Schematic screenshot](images/schematic-screenshot.png)
+
+Yes, the traces aren't parallel to the edges of the board, and yes it bugs me too.
+
+![PCB screenshot](images/pcb.png)
