@@ -9,7 +9,7 @@ There's a button on the front which is used to toggle display modes
 and sleep.
 
 When sleeping, the ornament uses about 200 microamps of current, little enough to run
-off of a coin cell battery for about 1000 hours! While running, it uses about 2 milliamps,
+off of a coin cell battery for about 1000 hours (in reality, probably less. I don't know, I didn't measure it)! While running, it uses about 2 milliamps,
 which could last for about 120 hours.
 
 ![Image of the snowflake ornament.](images/snowflake.png)
